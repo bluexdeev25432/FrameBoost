@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FrameBoost Repo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --bg-2: #12151d;
+      --panel: rgba(18, 21, 29, 0.9);
+      --panel-border: rgba(255,255,255,0.09);
+      --text: #eef3ff;
+      --muted: #a9b3c5;
+      --accent: #00FF88;
+      --secondary: #0066FF;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, #0d1018 100%);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+    .hero {
+      padding: 64px 0 40px;
+    }
+    .hero-inner {
+      padding: 32px 24px;
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      background: rgba(11, 13, 18, 0.9);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+    .logo {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 0.9;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      margin: 0;
+      color: var(--accent);
+    }
+    .tagline {
+      margin: 16px 0 20px;
+      font-size: clamp(1.1rem, 3vw, 1.8rem);
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .repo-url-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 22px 0;
+      flex-wrap: wrap;
+    }
+    .repo-url {
+      flex: 1 1 520px;
+      font-size: 0.98rem;
+      color: var(--text);
+      word-break: break-all;
+    }
+    .copy-btn, .button {
+      appearance: none;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .copy-btn {
+      background: var(--accent);
+      color: #04140c;
+      padding: 10px 14px;
+      min-width: 100px;
+    }
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .button {
+      padding: 14px 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      font-size: 0.96rem;
+    }
+    .button.primary {
+      background: var(--accent);
+      color: #04140c;
+    }
+    .button.secondary {
+      background: rgba(0, 102, 255, 0.18);
+      border: 1px solid rgba(0, 102, 255, 0.45);
+      color: var(--text);
+    }
+    .button:hover, .copy-btn:hover { transform: translateY(-1px); }
+    section {
+      padding: 20px 0;
+    }
+    .section-head {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin: 0 0 18px;
+      letter-spacing: -0.04em;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 150px;
+      box-shadow: 0 10px 25px var(--shadow);
+    }
+    .card-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 14px;
+    }
+    .steps li {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 14px;
+      padding: 14px 15px;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(0,255,136,0.12);
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .step-text {
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    th, td {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--panel-border);
+    }
+    th {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 700;
+    }
+    td { color: var(--muted); }
+    tr:last-child td { border-bottom: none; }
+    footer {
+      padding: 30px 0 60px;
+      color: var(--muted);
+      text-align: center;
+    }
+    @media (min-width: 780px) {
+      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <h1 class="logo">FrameBoost</h1>
+      <div class="tagline">Real-time FPS monitoring for iOS 15–16</div>
+      <div class="repo-url-box">
+        <div class="repo-url">https://bluexdeev25432.github.io/FrameBoost/repo/</div>
+        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      </div>
+      <div class="button-row">
+        <a class="button primary" href="sileo://source/https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Sileo</a>
+        <a class="button secondary" href="zbra://sources/add?url=https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Zebra</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2 class="section-head">Features</h2>
+      <div class="cards">
+        <article class="card"><div class="card-icon">📊</div><h3>FPS Overlay</h3><p>Live FPS readout tuned for gaming and app profiling.</p></article>
+        <article class="card"><div class="card-icon">⏱</div><h3>Frametime</h3><p>Monitor per-frame latency in milliseconds.</p></article>
+        <article class="card"><div class="card-icon">📉</div><h3>Stutter Detection</h3><p>Track jitter spikes and log events with a configurable threshold.</p></article>
+        <article class="card"><div class="card-icon">📈</div><h3>Session Stats</h3><p>Average, minimum, maximum, and P95 framing insights.</p></article>
+        <article class="card"><div class="card-icon">🎮</div><h3>Game Profiles</h3><p>Limit monitoring to specific app bundle IDs.</p></article>
+        <article class="card"><div class="card-icon">⚡</div><h3>Performance Profiles</h3><p>Battery, Balanced, and Stability tuning presets.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-head">Install Steps</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span><span class="step-text">Open Sileo and head to Sources.</span></li>
+        <li><span class="step-num">2</span><span class="step-text">Tap Edit → Add Source.</span></li>
+        <li><span class="step-num">3</span><span class="step-text">Paste the repository URL above.</span></li>
+        <li><span class="step-num">4</span><span class="step-text">Search for FrameBoost and install it.</span></li>
+        <li><span class="step-num">5</span><span class="step-text">Open Settings → FrameBoost to configure the overlay.</span></li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 class="section-head">Requirements</h2>
+      <table>
+        <tr><th>Field</th><th>Value</th></tr>
+        <tr><td>iOS</td><td>15.0 – 16.7</td></tr>
+        <tr><td>Jailbreak</td><td>Dopamine rootless</td></tr>
+        <tr><td>Package manager</td><td>Sileo / Zebra</td></tr>
+        <tr><td>Dependencies</td><td>ElleKit, PreferenceLoader</td></tr>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/bluexdeev25432/FrameBoost">GitHub</a> · MIT License · v1.0.0
+  </footer>
+
+  <script>
+    const repoUrl = 'https://bluexdeev25432.github.io/FrameBoost/repo/';
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(repoUrl);
+        const original = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        setTimeout(() => { copyBtn.textContent = original; }, 2000);
+      } catch (error) {
+        copyBtn.textContent = 'Failed';
+        setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>
