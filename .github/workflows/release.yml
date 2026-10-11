@@ -8,7 +8,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 jobs:
   build-deb:
@@ -100,17 +99,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./pages
           destination_dir: ""
-
-      - name: Configure GitHub Pages source
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          payload='{"source":{"branch":"gh-pages","path":"/"}}'
-          if gh api "repos/$GITHUB_REPOSITORY/pages" >/dev/null 2>&1; then
-            gh api --method PUT "repos/$GITHUB_REPOSITORY/pages" --input - <<< "$payload"
-          else
-            gh api --method POST "repos/$GITHUB_REPOSITORY/pages" --input - <<< "$payload"
-          fi
 
   create-release:
     runs-on: ubuntu-latest
