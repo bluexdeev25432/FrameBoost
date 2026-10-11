@@ -5,10 +5,10 @@ Maintainer: bluexdeev25432 <bluexdeev25432@users.noreply.github.com>
 Installed-Size: 172
 Depends: mobilesubstrate | libhooker | substrate-compat, preferenceloader
 Filename: ./com.bluexdeev25432.frameboost_1.0.0_iphoneos-arm64.deb
-Size: 18790
-MD5sum: e92cb37a8ffc2b7003af68dbd32fb6d7
-SHA1: 415aad4b1b062e16639f16e8c9b05a1dca5d7861
-SHA256: d1773ceb05c1d429cc9946a4e826d5593fdd7e4614b15a9e2fae240fa898bc82
+Size: 18768
+MD5sum: dab965e35e9e8810d29c2a9b1befa908
+SHA1: c724a598759c049106e17b4662b60f63211d0baf
+SHA256: 910d7b269c017f733bd3ebd304f33d731f35cd176fe7d102c13782323d956675
 Section: Tweaks
 Priority: optional
 Homepage: https://bluexdeev25432.github.io/FrameBoost/
