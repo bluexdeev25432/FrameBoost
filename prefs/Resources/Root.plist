@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>title</key>
+    <string>FrameBoost</string>
+    <key>items</key>
+    <array>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>General</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSwitchCell</string>
+            <key>key</key>
+            <string>enabled</string>
+            <key>label</key>
+            <string>Enable FrameBoost</string>
+            <key>default</key>
+            <true/>
+            <key>PostNotification</key>
+            <string>com.bluexdeev25432.frameboost/reload</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSwitchCell</string>
+            <key>key</key>
+            <string>overlayEnabled</string>
+            <key>label</key>
+            <string>Show FPS Overlay</string>
+            <key>default</key>
+            <true/>
+            <key>PostNotification</key>
+            <string>com.bluexdeev25432.frameboost/reload</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Monitor</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>detail</key>
+            <string>FBMonitorPrefsController</string>
+            <key>label</key>
+            <string>Monitor Settings</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Overlay</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>detail</key>
+            <string>FBOverlayPrefsController</string>
+            <key>label</key>
+            <string>Overlay Settings</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Performance</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>detail</key>
+            <string>FBProfilesPrefsController</string>
+            <key>label</key>
+            <string>Performance Profile</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Diagnostics</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSLinkCell</string>
+            <key>detail</key>
+            <string>FBDiagnosticsController</string>
+            <key>label</key>
+            <string>Diagnostics &amp; Log</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>About</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSStaticTextCell</string>
+            <key>label</key>
+            <string>Version</string>
+            <key>value</key>
+            <string>1.0.0</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSStaticTextCell</string>
+            <key>label</key>
+            <string>License</string>
+            <key>value</key>
+            <string>MIT</string>
+        </dict>
+    </array>
+</dict>
+</plist>

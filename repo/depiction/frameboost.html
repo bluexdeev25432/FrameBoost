@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FrameBoost</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --bg-panel: #141414;
+      --text: #f0f0f0;
+      --muted: #b9b9b9;
+      --accent: #00FF88;
+      --accent-soft: rgba(0, 255, 136, 0.15);
+      --line: rgba(255,255,255,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    .wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 18px 48px;
+    }
+    .header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      color: var(--accent);
+      letter-spacing: -0.05em;
+      font-weight: 800;
+    }
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .pill {
+      display: inline-block;
+      margin-top: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(0,255,136,0.3);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    section {
+      margin-top: 24px;
+      background: var(--bg-panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      color: var(--accent);
+    }
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+    li { margin: 8px 0; }
+    .requirements {
+      display: grid;
+      gap: 8px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 8px;
+    }
+    .row:last-child { border-bottom: none; }
+    .label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .support {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>FrameBoost</h1>
+      <div class="subtitle">FPS Monitor &amp; Frame Diagnostic</div>
+      <div class="pill">v1.0.0</div>
+    </div>
+
+    <section>
+      <h2>Features</h2>
+      <ul>
+        <li>Real-time FPS overlay with adjustable position and style</li>
+        <li>Frametime readout in milliseconds</li>
+        <li>Stutter detection with threshold control</li>
+        <li>Session statistics and P95 frametime</li>
+        <li>Game-specific bundle ID profiles</li>
+        <li>Battery / Balanced / Stability performance presets</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Requirements</h2>
+      <div class="requirements">
+        <div class="row"><span class="label">iOS</span><span>15.0 – 16.7</span></div>
+        <div class="row"><span class="label">Jailbreak</span><span>Dopamine (rootless)</span></div>
+        <div class="row"><span class="label">Inject lib</span><span>ElleKit / libhooker</span></div>
+        <div class="row"><span class="label">Prefs</span><span>PreferenceLoader 2.2.4+</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Changelog</h2>
+      <ul>
+        <li>Initial 1.0.0 release</li>
+        <li>Real-time FPS monitoring with overlay and stutter detection</li>
+        <li>Preference bundle for monitor and overlay controls</li>
+        <li>Game profiles and performance presets</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Measurement Note</h2>
+      <p>FrameBoost calculates FPS from CADisplayLink callback intervals. This reflects display cadence, not direct GPU scanout timing. On ProMotion devices, the readings follow the active refresh rate, which makes them a useful monitoring proxy rather than a hardware-accurate performance counter.</p>
+    </section>
+
+    <section>
+      <h2>Support</h2>
+      <div class="support">
+        <a href="https://github.com/bluexdeev25432/FrameBoost">View on GitHub</a>
+        <a href="https://github.com/bluexdeev25432/FrameBoost/issues">Report an Issue</a>
+        <a href="https://github.com/bluexdeev25432/FrameBoost/blob/main/LICENSE">MIT License</a>
+      </div>
+    </section>
+
+    <div class="footer">
+      <a href="https://github.com/bluexdeev25432/FrameBoost">FrameBoost on GitHub</a>
+    </div>
+  </div>
+</body>
+</html>

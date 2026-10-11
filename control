@@ -1,0 +1,16 @@
+Package: com.bluexdeev25432.frameboost
+Name: FrameBoost
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Real-time FPS overlay and frame diagnostic tweak
+ for iOS 15-16 with Dopamine rootless support.
+ Monitor FPS, frametime, stutter events and session statistics.
+Maintainer: bluexdeev25432 <bluexdeev25432@users.noreply.github.com>
+Author: bluexdeev25432 <bluexdeev25432@users.noreply.github.com>
+Section: Tweaks
+Depends: mobilesubstrate | libhooker | substrate-compat, preferenceloader
+Priority: optional
+Homepage: https://bluexdeev25432.github.io/FrameBoost/
+Depiction: https://bluexdeev25432.github.io/FrameBoost/repo/depiction/frameboost.html
+SileoDepiction: https://bluexdeev25432.github.io/FrameBoost/repo/depiction/frameboost.json
+Tag: purpose::extension, role::enduser-app

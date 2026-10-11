@@ -1,0 +1,109 @@
+{
+  "minVersion": "0.1",
+  "class": "DepictionTabView",
+  "tabs": [
+    {
+      "tabname": "Details",
+      "class": "DepictionStackView",
+      "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "FPS Monitor for iOS 15-16"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
+        {
+          "class": "DepictionHeaderView",
+          "title": "Features"
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "- Real-time FPS overlay\n- Frametime tracking in milliseconds\n- Stutter detection with configurable thresholds\n- Session stats: average, min, max, and P95 frametime\n- Per-app profiles and performance presets\n- Full Settings.app preference bundle\n- Log export to /var/mobile/Documents/"
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
+        {
+          "class": "DepictionHeaderView",
+          "title": "Measurement Note"
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "FrameBoost measures display cadence via CADisplayLink callback intervals. This reflects vsync delivery timing, not direct GPU scanout time. On ProMotion devices, reported FPS tracks the active system refresh rate, so the values are a monitoring proxy rather than a hardware-accurate counter."
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
+        {
+          "class": "DepictionHeaderView",
+          "title": "Requirements"
+        },
+        {
+          "class": "DepictionTableTextView",
+          "rows": [
+            {
+              "title": "iOS Version",
+              "text": "15.0 – 16.7"
+            },
+            {
+              "title": "Jailbreak",
+              "text": "Dopamine (rootless)"
+            },
+            {
+              "title": "Inject lib",
+              "text": "ElleKit / libhooker"
+            },
+            {
+              "title": "Prefs",
+              "text": "PreferenceLoader 2.2.4+"
+            }
+          ]
+        },
+        {
+          "class": "DepictionSeparatorView"
+        },
+        {
+          "class": "DepictionStackView",
+          "spacing": 16,
+          "views": []
+        }
+      ]
+    },
+    {
+      "tabname": "Changelog",
+      "class": "DepictionStackView",
+      "views": [
+        {
+          "class": "DepictionSubheaderView",
+          "title": "Version 1.0.0"
+        },
+        {
+          "class": "DepictionMarkdownView",
+          "markdown": "### Added\n- Real-time FPS overlay with configurable position and style\n- Frametime display in milliseconds\n- Stutter detection with user-configurable threshold\n- Session statistics: average / minimum / maximum FPS\n- P95 frametime calculation\n- Per-app game profiles via bundle ID allowlist\n- Three performance profiles: Battery, Balanced, Stability\n- Stutter event log with ring buffer (512 events)\n- Log export to /var/mobile/Documents/frameboost_stutter.log\n- Full Settings.app preference bundle with 6 sections\n- Darwin notify for live preference reload without respring\n- Dopamine rootless compatibility (arm64 + arm64e)"
+        }
+      ]
+    },
+    {
+      "tabname": "Support",
+      "class": "DepictionStackView",
+      "views": [
+        {
+          "class": "DepictionTableButtonView",
+          "title": "View on GitHub",
+          "action": "https://github.com/bluexdeev25432/FrameBoost"
+        },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "Report an Issue",
+          "action": "https://github.com/bluexdeev25432/FrameBoost/issues"
+        },
+        {
+          "class": "DepictionTableButtonView",
+          "title": "MIT License",
+          "action": "https://github.com/bluexdeev25432/FrameBoost/blob/main/LICENSE"
+        }
+      ]
+    }
+  ]
+}

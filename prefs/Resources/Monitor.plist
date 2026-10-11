@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>title</key>
+    <string>Monitor</string>
+    <key>items</key>
+    <array>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Update Interval</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSliderCell</string>
+            <key>key</key>
+            <string>updateInterval</string>
+            <key>min</key>
+            <real>0.1</real>
+            <key>max</key>
+            <real>2.0</real>
+            <key>default</key>
+            <real>0.5</real>
+            <key>PostNotification</key>
+            <string>com.bluexdeev25432.frameboost/reload</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSGroupCell</string>
+            <key>label</key>
+            <string>Stutter Detection</string>
+        </dict>
+        <dict>
+            <key>cell</key>
+            <string>PSSliderCell</string>
+            <key>key</key>
+            <string>stutterThresholdMS</string>
+            <key>min</key>
+            <real>16.6</real>
+            <key>max</key>
+            <real>100.0</real>
+            <key>default</key>
+            <real>33.3</real>
+            <key>PostNotification</key>
+            <string>com.bluexdeev25432.frameboost/reload</string>
+        </dict>
+    </array>
+</dict>
+</plist>

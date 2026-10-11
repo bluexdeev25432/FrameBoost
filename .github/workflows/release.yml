@@ -1,0 +1,109 @@
+name: Release FrameBoost
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-latest
+    container: ghcr.io/theos/buildenv
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Theos
+        uses: theos/theos-action@v1
+        with:
+          theos-sdks-path: ./sdks
+
+      - name: Build package
+        run: make package FINALPACKAGE=1
+
+      - name: Upload DEB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frameboost-deb
+          path: packages/*.deb
+
+  publish-repo:
+    runs-on: ubuntu-latest
+    needs: build-deb
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download DEB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frameboost-deb
+          path: ./packages
+
+      - name: Copy DEB into repo directory
+        run: |
+          mkdir -p repo
+          cp -f ./packages/*.deb ./repo/
+
+      - name: Generate Packages index and Pages tree
+        run: |
+          cd repo
+          dpkg-scanpackages -m . /dev/null > Packages
+          awk '
+            /^Package: com.bluexdeev25432.frameboost$/ { in_package = 1 }
+            in_package && /^SileoDepiction:/ { next }
+            in_package && /^Depiction:/ {
+              print
+              print "SileoDepiction: https://bluexdeev25432.github.io/FrameBoost/repo/depiction/frameboost.json"
+              next
+            }
+            in_package && /^$/ { in_package = 0 }
+            { print }
+          ' Packages > Packages.tmp
+          mv Packages.tmp Packages
+          perl -0pi -e 's/\n+\z/\n/' Packages
+          bzip2 -kf Packages
+          cd ..
+          mkdir -p pages/repo
+          cp -R repo/. pages/repo/
+          cp repo/index.html pages/index.html
+
+      - name: Deploy repo to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./pages
+          destination_dir: ""
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build-deb
+    steps:
+      - name: Download DEB artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frameboost-deb
+          path: ./packages
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: packages/*.deb
+          generate_release_notes: true
+          overwrite_files: true
+          body: |
+            ## FrameBoost ${{ github.ref_name }}
+
+            ### Installation
+            Add repo to Sileo:
+            `https://bluexdeev25432.github.io/FrameBoost/repo/`
+
+            Or download the .deb below and install manually.
+
+            ### Requirements
+            - iOS 15.0 – 16.7
+            - Dopamine rootless jailbreak
+            - ElleKit or libhooker
+            - PreferenceLoader
