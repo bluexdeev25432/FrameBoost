@@ -3,34 +3,176 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FrameBoost Repo</title>
+  <meta name="description" content="FrameBoost docs and installation overview for Dopamine jailbreak users." />
+  <meta name="theme-color" content="#071511" />
+  <title>FrameBoost Docs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #071511;
+      --panel: rgba(16, 30, 24, 0.9);
+      --panel-border: rgba(132, 255, 197, 0.18);
+      --text: #ecfff6;
+      --muted: #adcabd;
+      --accent: #00ff88;
+      --accent-strong: #74ffc6;
+      --blue: #4ea1ff;
+      --shadow: rgba(0, 0, 0, 0.38);
+    }
+    * { box-sizing: border-box; }
     body {
-      background: #0d0d0d;
-      color: #f0f0f0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       margin: 0;
-      padding: 32px 16px;
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, rgba(0,255,136,0.12), transparent 26%), linear-gradient(180deg, var(--bg) 0%, #081711 100%);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+    }
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .wrap {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 52px 0 80px;
     }
     .card {
-      max-width: 760px;
-      margin: 0 auto;
-      background: #141414;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 18px;
-      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      box-shadow: 0 24px 60px var(--shadow);
+      padding: 28px;
+      animation: rise-in 0.7s ease-out both;
     }
-    h1 { color: #00FF88; margin-top: 0; }
-    a { color: #00FF88; }
-    .url { word-break: break-all; }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent-strong);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 6vw, 4.3rem);
+      letter-spacing: -0.06em;
+      line-height: 0.98;
+    }
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.04rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 180px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.18s ease;
+    }
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #04140b;
+      box-shadow: 0 12px 25px rgba(0,255,136,0.2);
+    }
+    .button.secondary {
+      background: rgba(78,161,255,0.10);
+      border: 1px solid rgba(78,161,255,0.26);
+      color: var(--text);
+    }
+    .button:hover { transform: translateY(-1px); }
+    .meta {
+      margin-top: 22px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--panel-border);
+      word-break: break-all;
+      color: var(--text);
+    }
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .feature {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--panel-border);
+      border-radius: 18px;
+      padding: 18px;
+      animation: rise-in 0.6s ease-out both;
+      transition: translate 0.22s ease, border-color 0.22s ease;
+    }
+    .feature:nth-child(2) { animation-delay: 0.1s; }
+    .feature:nth-child(3) { animation-delay: 0.2s; }
+    .feature:hover {
+      translate: 0 -4px;
+      border-color: rgba(0,255,136,0.42);
+    }
+    .feature h3 {
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+    .feature p {
+      margin: 0;
+      font-size: 0.94rem;
+    }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+      .button { width: 100%; }
+      .cta-row { display: grid; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>FrameBoost</h1>
-    <p>Real-time FPS monitoring for iOS 15–16 with Dopamine rootless compatibility.</p>
-    <p class="url">https://bluexdeev25432.github.io/FrameBoost/repo/</p>
-    <p><a href="https://bluexdeev25432.github.io/FrameBoost/repo/">Open repo page</a></p>
+  <div class="wrap">
+    <div class="card">
+      <p class="eyebrow">FrameBoost docs</p>
+      <h1>Measure your device’s smoothness in real time.</h1>
+      <p>FrameBoost is a real-time FPS overlay and frame pacing diagnostic tweak for iOS 15–16 on Dopamine rootless jailbreaks. It helps you monitor FPS, frametime, stutter events, and per-session performance without altering the hardware.</p>
+
+      <div class="cta-row">
+        <a class="button primary" href="https://bluexdeev25432.github.io/FrameBoost/repo/" target="_blank" rel="noreferrer">Open repo</a>
+        <a class="button secondary" href="https://github.com/bluexdeev25432/FrameBoost" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+
+      <div class="meta">https://bluexdeev25432.github.io/FrameBoost/repo/</div>
+
+      <div class="grid">
+        <div class="feature">
+          <h3>Live FPS</h3>
+          <p>Monitor smoothness as it changes while you game or test apps.</p>
+        </div>
+        <div class="feature">
+          <h3>Stutter logs</h3>
+          <p>Track pacing issues and export your diagnostics to the Documents folder.</p>
+        </div>
+        <div class="feature">
+          <h3>Game profiles</h3>
+          <p>Limit monitoring to selected bundle IDs for the apps you care about.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

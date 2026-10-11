@@ -3,150 +3,392 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FrameBoost Repo</title>
+  <meta name="description" content="FrameBoost gives Dopamine jailbreak users a live FPS overlay, frametime diagnostics, stutter detection, and performance insights for iOS 15–16." />
+  <meta name="theme-color" content="#071511" />
+  <title>FrameBoost | Real-time FPS monitoring for iOS 15–16</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0a0f;
-      --bg-2: #12151d;
-      --panel: rgba(18, 21, 29, 0.9);
-      --panel-border: rgba(255,255,255,0.09);
-      --text: #eef3ff;
-      --muted: #a9b3c5;
-      --accent: #00FF88;
-      --secondary: #0066FF;
-      --shadow: rgba(0, 0, 0, 0.35);
+      --bg: #071511;
+      --bg-soft: #0d1c18;
+      --panel: rgba(16, 30, 24, 0.9);
+      --panel-strong: rgba(21, 39, 31, 0.96);
+      --panel-border: rgba(132, 255, 197, 0.18);
+      --text: #ecfff6;
+      --muted: #adcabd;
+      --accent: #00ff88;
+      --accent-strong: #74ffc6;
+      --blue: #4ea1ff;
+      --shadow: rgba(0, 0, 0, 0.38);
+      --warning: #ffc857;
+      --danger: #ff7a7a;
     }
+
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      background: linear-gradient(180deg, var(--bg) 0%, #0d1018 100%);
+      background:
+        radial-gradient(circle at top left, rgba(0,255,136,0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(78,161,255,0.14), transparent 25%),
+        linear-gradient(180deg, var(--bg) 0%, #091712 100%);
       color: var(--text);
       font-family: "Inter", sans-serif;
     }
+
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes preview-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
     a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
     .container {
-      width: min(1100px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
     }
-    .hero {
-      padding: 64px 0 40px;
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(7, 21, 17, 0.7);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-    .hero-inner {
-      padding: 32px 24px;
-      border: 1px solid var(--panel-border);
-      border-radius: 24px;
-      background: rgba(11, 13, 18, 0.9);
-      box-shadow: 0 20px 40px var(--shadow);
-    }
-    .logo {
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      line-height: 0.9;
-      font-weight: 800;
-      letter-spacing: -0.06em;
-      margin: 0;
-      color: var(--accent);
-    }
-    .tagline {
-      margin: 16px 0 20px;
-      font-size: clamp(1.1rem, 3vw, 1.8rem);
-      color: var(--muted);
-      font-weight: 500;
-    }
-    .repo-url-box {
+    .nav {
       display: flex;
       align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--panel-border);
-      border-radius: 14px;
-      padding: 12px 14px;
-      margin: 22px 0;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 76px;
     }
-    .repo-url {
-      flex: 1 1 520px;
-      font-size: 0.98rem;
-      color: var(--text);
-      word-break: break-all;
+    .brand {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--accent);
     }
-    .copy-btn, .button {
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+    .nav-links a { transition: color 0.18s ease; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-button,
+    .button,
+    .copy-btn {
       appearance: none;
       border: none;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 0.95rem;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
     }
-    .copy-btn {
-      background: var(--accent);
-      color: #04140c;
-      padding: 10px 14px;
-      min-width: 100px;
+    .nav-button,
+    .button.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #04140b;
+      box-shadow: 0 12px 28px rgba(0,255,136,0.22);
     }
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 12px;
+    .nav-button {
+      padding: 10px 16px;
+      font-size: 0.9rem;
     }
     .button {
-      padding: 14px 20px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-width: 180px;
+      padding: 14px 18px;
       font-size: 0.96rem;
     }
-    .button.primary {
-      background: var(--accent);
-      color: #04140c;
-    }
     .button.secondary {
-      background: rgba(0, 102, 255, 0.18);
-      border: 1px solid rgba(0, 102, 255, 0.45);
+      background: rgba(78,161,255,0.10);
       color: var(--text);
+      border: 1px solid rgba(78,161,255,0.26);
     }
-    .button:hover, .copy-btn:hover { transform: translateY(-1px); }
-    section {
-      padding: 20px 0;
+    .nav-button:hover,
+    .button:hover,
+    .copy-btn:hover {
+      transform: translateY(-1px);
     }
-    .section-head {
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      margin: 0 0 18px;
-      letter-spacing: -0.04em;
+
+    .hero {
+      padding: 52px 0 32px;
     }
-    .cards {
+    .hero-copy { animation: rise-in 0.7s ease-out both; }
+    .hero-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--accent-strong);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2.9rem, 6vw, 5.2rem);
+      line-height: 0.95;
+      letter-spacing: -0.065em;
+      max-width: 620px;
+    }
+    .hero-copy p {
+      max-width: 620px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .repo-url-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--panel-border);
+      max-width: 720px;
+    }
+    .repo-url {
+      font-size: 0.96rem;
+      color: var(--text);
+      word-break: break-all;
+      flex: 1 1 420px;
+    }
+    .copy-btn {
+      background: var(--accent);
+      color: #04140b;
+      padding: 10px 14px;
+      min-width: 100px;
+    }
+
+    .platform-panel {
+      position: relative;
+      background: linear-gradient(180deg, rgba(12, 26, 21, 0.98), rgba(8, 15, 13, 0.95));
+      border: 1px solid var(--panel-border);
+      border-radius: 28px;
+      box-shadow: 0 32px 80px var(--shadow);
+      overflow: hidden;
+      padding: 18px;
+      animation: rise-in 0.8s 0.12s ease-out both;
+    }
+    .phone-frame {
+      border-radius: 24px;
+      background: rgba(6, 13, 11, 0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 18px 16px 14px;
+      animation: preview-float 6s 1s ease-in-out infinite;
+    }
+    .statusbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #dff9ec;
+      font-size: 0.72rem;
+      opacity: 0.8;
+      padding: 0 4px 10px;
+    }
+    .overlay-window {
+      padding: 14px 12px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .overlay-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.86rem;
+      margin-bottom: 10px;
+    }
+    .fps-big {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+    .fps-big strong {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      color: var(--accent);
+    }
+    .fps-big span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .overlay-meta {
+      margin-top: 8px;
+      display: grid;
+      gap: 6px;
+      color: #d9f5e7;
+      font-size: 0.82rem;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      background: rgba(0,255,136,0.09);
+      border: 1px solid rgba(0,255,136,0.2);
+      color: var(--accent-strong);
+    }
+    .pill.alt {
+      background: rgba(78,161,255,0.10);
+      border-color: rgba(78,161,255,0.18);
+      color: #b7d8ff;
+    }
+    .pill.warn {
+      background: rgba(255,200,87,0.08);
+      border-color: rgba(255,200,87,0.18);
+      color: var(--warning);
+    }
+
+    .metrics {
+      padding: 8px 0 22px;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
     }
-    .card {
-      background: var(--panel);
+    .metric {
+      background: rgba(255,255,255,0.02);
       border: 1px solid var(--panel-border);
       border-radius: 18px;
-      padding: 18px;
-      min-height: 150px;
-      box-shadow: 0 10px 25px var(--shadow);
+      padding: 18px 20px;
+      box-shadow: 0 12px 25px var(--shadow);
+      animation: rise-in 0.6s ease-out both;
     }
-    .card-icon { font-size: 1.5rem; margin-bottom: 10px; }
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 1.15rem;
+    .metric:nth-child(2) { animation-delay: 0.08s; }
+    .metric:nth-child(3) { animation-delay: 0.16s; }
+    .metric:nth-child(4) { animation-delay: 0.24s; }
+    .metric strong {
+      display: block;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      letter-spacing: -0.06em;
+      color: var(--accent);
     }
-    .card p {
-      margin: 0;
+    .metric span {
+      display: block;
+      margin-top: 8px;
       color: var(--muted);
-      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .section {
+      padding: 32px 0;
+    }
+    .section-heading {
+      margin-bottom: 24px;
+    }
+    .section-heading p {
+      margin: 0 0 10px;
+      color: var(--accent-strong);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+      line-height: 1.05;
+      max-width: 760px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .feature-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      padding: 22px 20px;
+      min-height: 220px;
+      box-shadow: 0 18px 34px var(--shadow);
+      animation: rise-in 0.6s ease-out both;
+      transition: translate 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+    .feature-card:nth-child(2) { animation-delay: 0.08s; }
+    .feature-card:nth-child(3) { animation-delay: 0.16s; }
+    .feature-card:nth-child(4) { animation-delay: 0.08s; }
+    .feature-card:nth-child(5) { animation-delay: 0.16s; }
+    .feature-card:nth-child(6) { animation-delay: 0.24s; }
+    .feature-card:hover {
+      translate: 0 -5px;
+      border-color: rgba(0,255,136,0.42);
+      box-shadow: 0 24px 42px var(--shadow);
+    }
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      font-size: 1.5rem;
+      background: rgba(0,255,136,0.09);
+      border: 1px solid rgba(0,255,136,0.2);
+      margin-bottom: 14px;
+    }
+    .feature-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      letter-spacing: -0.04em;
+    }
+    .feature-card p {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .install-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: start;
     }
     .steps {
       list-style: none;
-      padding: 0;
       margin: 0;
+      padding: 0;
       display: grid;
       gap: 14px;
     }
@@ -154,70 +396,362 @@
       display: grid;
       grid-template-columns: 42px 1fr;
       gap: 14px;
-      background: var(--panel);
+      background: rgba(255,255,255,0.02);
       border: 1px solid var(--panel-border);
-      border-radius: 14px;
-      padding: 14px 15px;
+      border-radius: 16px;
+      padding: 16px 18px;
+      animation: rise-in 0.55s ease-out both;
     }
+    .steps li:nth-child(2) { animation-delay: 0.08s; }
+    .steps li:nth-child(3) { animation-delay: 0.16s; }
+    .steps li:nth-child(4) { animation-delay: 0.24s; }
     .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       width: 42px;
       height: 42px;
       border-radius: 50%;
-      background: rgba(0,255,136,0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,255,136,0.1);
       color: var(--accent);
       font-weight: 800;
     }
     .step-text {
       color: var(--text);
-      font-weight: 500;
-      line-height: 1.5;
+      line-height: 1.6;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .requirements,
+    .info-box {
       background: var(--panel);
       border: 1px solid var(--panel-border);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
+      box-shadow: 0 18px 32px var(--shadow);
     }
-    th, td {
-      text-align: left;
+    .requirements table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .requirements th,
+    .requirements td {
       padding: 14px 16px;
-      border-bottom: 1px solid var(--panel-border);
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
-    th {
-      background: rgba(255,255,255,0.04);
+    .requirements th {
+      background: rgba(255,255,255,0.02);
       color: var(--text);
-      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
-    td { color: var(--muted); }
-    tr:last-child td { border-bottom: none; }
+    .requirements td {
+      color: var(--muted);
+    }
+    .requirements tr:last-child th,
+    .requirements tr:last-child td { border-bottom: none; }
+
+    .shot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    figure {
+      margin: 0;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 18px 32px var(--shadow);
+    }
+    figure img {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    figcaption {
+      padding: 14px 16px 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
     footer {
-      padding: 30px 0 60px;
+      padding: 32px 0 64px;
       color: var(--muted);
       text-align: center;
+      font-size: 0.95rem;
     }
-    @media (min-width: 780px) {
-      .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    footer a { transition: color 0.18s ease; }
+    footer a:hover { color: var(--accent); }
+    .footer-links {
+      display: inline-flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .install-grid,
+      .feature-grid,
+      .shot-grid,
+      .metric-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero-grid,
+      .install-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .metric-grid,
+      .feature-grid,
+      .shot-grid { grid-template-columns: 1fr; }
+      .repo-url-box { align-items: stretch; }
+      .copy-btn { width: 100%; }
+      .button { width: 100%; }
+      .cta-row { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container hero-inner">
-      <h1 class="logo">FrameBoost</h1>
-      <div class="tagline">Real-time FPS monitoring for iOS 15–16</div>
-      <div class="repo-url-box">
-        <div class="repo-url">https://bluexdeev25432.github.io/FrameBoost/repo/</div>
-        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#top">FrameBoost</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+        <a href="#screenshots">Screenshots</a>
+        <a href="https://github.com/bluexdeev25432/FrameBoost" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+      <a class="nav-button" href="https://github.com/bluexdeev25432/FrameBoost" target="_blank" rel="noreferrer">View source</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Dopamine • iOS 15–16 • real-time diagnostics</p>
+          <h1>Boost your frame awareness.</h1>
+          <p>
+            FrameBoost is a lightweight FPS overlay and frametime diagnostic tweak built for Dopamine rootless jailbreaks.
+            It shows smoothness, stutter events, and session performance in real time without changing CPU, GPU, or display timing.
+          </p>
+
+          <div class="cta-row">
+            <a class="button primary" href="sileo://source/https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Sileo</a>
+            <a class="button secondary" href="zbra://sources/add?url=https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Zebra</a>
+          </div>
+
+          <div class="repo-url-box">
+            <div class="repo-url">https://bluexdeev25432.github.io/FrameBoost/repo/</div>
+            <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+          </div>
+        </div>
+
+        <div class="platform-panel" aria-label="FrameBoost overlay preview">
+          <div class="phone-frame">
+            <div class="statusbar">
+              <span>9:41</span>
+              <span>LTE • 88%</span>
+            </div>
+
+            <div class="overlay-window">
+              <div class="overlay-top">
+                <span>FrameBoost</span>
+                <span>Balanced</span>
+              </div>
+              <div class="fps-big">
+                <strong>59.9</strong>
+                <span>FPS</span>
+              </div>
+              <div class="overlay-meta">
+                <span>Frame time: 16.7 ms</span>
+                <span>Avg: 59.7 · P95: 19.3 ms</span>
+                <span>Thermal: normal</span>
+              </div>
+            </div>
+
+            <div class="pill-row">
+              <span class="pill">Live FPS</span>
+              <span class="pill alt">Stutter log</span>
+              <span class="pill warn">Session stats</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="button-row">
-        <a class="button primary" href="sileo://source/https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Sileo</a>
-        <a class="button secondary" href="zbra://sources/add?url=https://bluexdeev25432.github.io/FrameBoost/repo/">Add to Zebra</a>
+    </section>
+
+    <section class="metrics">
+      <div class="container metric-grid">
+        <div class="metric">
+          <strong>60</strong>
+          <span>FPS overlay</span>
+        </div>
+        <div class="metric">
+          <strong>33.3</strong>
+          <span>ms stutter threshold</span>
+        </div>
+        <div class="metric">
+          <strong>3</strong>
+          <span>performance profiles</span>
+        </div>
+        <div class="metric">
+          <strong>∞</strong>
+          <span>monitoring insight</span>
+        </div>
       </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p>Built for confidence</p>
+          <h2>Monitor frame pacing and performance without changing the hardware.</h2>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>FPS Overlay</h3>
+            <p>Track live frame rate while gaming or testing apps with a clean overlay tuned for quick reads.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⏱</div>
+            <h3>Frametime Insights</h3>
+            <p>See millisecond-level frame timing and compare how smooth or inconsistent your app feels in real time.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📉</div>
+            <h3>Stutter Detection</h3>
+            <p>Spot pacing drops and export log events to your Documents folder with a configurable stutter threshold.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Session Stats</h3>
+            <p>Review average, minimum, maximum, and P95 readings to understand long-running smoothness, not just a single frame.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3>Game Profiles</h3>
+            <p>Enable monitoring only for selected apps using bundle IDs so it stays focused on the titles you care about.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Performance Profiles</h3>
+            <p>Choose Battery, Balanced, or Stability presets to match your device and workload without opening a terminal.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="install" class="section">
+      <div class="container install-grid">
+        <div>
+          <div class="section-heading">
+            <p>Quick install</p>
+            <h2>Get FrameBoost running in minutes.</h2>
+          </div>
+
+          <ol class="steps">
+            <li><span class="step-num">1</span><span class="step-text">Open Sileo or Zebra and go to the Sources tab.</span></li>
+            <li><span class="step-num">2</span><span class="step-text">Tap Edit → Add and paste the repository URL shown above.</span></li>
+            <li><span class="step-num">3</span><span class="step-text">Search for FrameBoost, install it, and respring when prompted.</span></li>
+            <li><span class="step-num">4</span><span class="step-text">Open Settings → FrameBoost and enable the overlay for your preferred apps.</span></li>
+          </ol>
+        </div>
+
+        <aside class="requirements">
+          <table>
+            <thead>
+              <tr><th colspan="2">Requirements</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>iOS</td><td>15.0 – 16.7</td></tr>
+              <tr><td>Jailbreak</td><td>Dopamine rootless</td></tr>
+              <tr><td>Dependencies</td><td>ElleKit, PreferenceLoader</td></tr>
+              <tr><td>Package manager</td><td>Sileo / Zebra</td></tr>
+              <tr><td>Process</td><td>Install from repo or manual .deb</td></tr>
+            </tbody>
+          </table>
+        </aside>
+      </div>
+    </section>
+
+    <section id="screenshots" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <p>In action</p>
+          <h2>See how the overlay and logs look on-device.</h2>
+        </div>
+
+        <div class="shot-grid">
+          <figure>
+            <img src="../docs/screenshots/overlay.png" alt="FrameBoost overlay screenshot" />
+            <figcaption>Live FPS and frametime overlay.</figcaption>
+          </figure>
+          <figure>
+            <img src="../docs/screenshots/settings.png" alt="FrameBoost settings screenshot" />
+            <figcaption>Full Settings app configuration panel.</figcaption>
+          </figure>
+          <figure>
+            <img src="../docs/screenshots/stutter.png" alt="FrameBoost stutter log screenshot" />
+            <figcaption>Stutter log export and session diagnostics.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-links">
+      <a href="https://github.com/bluexdeev25432/FrameBoost" target="_blank" rel="noreferrer">GitHub</a>
+      <span>•</span>
+      <span>MIT License</span>
+      <span>•</span>
+      <span>v1.0.0</span>
+    </div>
+  </footer>
+
+  <script>
+    const repoUrl = 'https://bluexdeev25432.github.io/FrameBoost/repo/';
+    const copyBtn = document.getElementById('copyBtn');
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(repoUrl);
+          const original = copyBtn.textContent;
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => { copyBtn.textContent = original; }, 2000);
+        } catch (error) {
+          copyBtn.textContent = 'Failed';
+          setTimeout(() => { copyBtn.textContent = 'Copy'; }, 2000);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
     </div>
   </header>
 
